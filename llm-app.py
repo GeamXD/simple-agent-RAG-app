@@ -33,8 +33,8 @@ researcher = Agent(
     complex ideas simple and teachable""",
     verbose=True,
     allow_delegation=False,
-    max_iter=10,
-    max_rpm=10,
+    max_iter=5,
+    max_rpm=5,
     llm=ollama_openhermes,
 )
 
@@ -45,8 +45,8 @@ writer = Agent(
     insightul and engaging articles. With a deep understanding of the
     education system. You can transfrom complex ideas into compelling articles""",
     verbose=True,
-    max_iter=10,
-    max_rpm=10,
+    max_iter=5,
+    max_rpm=5,
     allow_delegation=True,
     llm=ollama_openhermes,
 )
@@ -58,8 +58,8 @@ examiner = Agent(
     test questions to evaluate learners
     knowledge in various concept""",
     verbose=True,
-    max_iter=10,
-    max_rpm=10,
+    max_iter=5,
+    max_rpm=5,
     allow_delegation=False,
     llm=ollama_openhermes,
 )
