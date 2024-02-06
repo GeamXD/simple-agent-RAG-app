@@ -1,20 +1,22 @@
 from crewai import Agent, Task, Process, Crew
 from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_community.llms import Ollama
-# import streamlit as st
+import streamlit as st
 
 ##### TITLE ############################
-# col1, col2, col3 = st.columns(3)
-# with col1:
-#     st.write('')
-# with col2:
-#     st.title('Crew App')
-# with col3:
-#     st.write('')
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.write('')
+with col2:
+    st.title('Crew App')
+with col3:
+    st.write('')
 
 # Topic that will be used in the crew run
-# topic = st.text_input('', placeholder='Enter interested topic')
-topic = 'Gravity'
+try:
+    topic = st.text_input('', placeholder='Enter interested topic')
+except Exception as e:
+    pass
 # TOOL for searching
 search_tool = DuckDuckGoSearchRun()
 
@@ -62,10 +64,7 @@ examiner = Agent(
 research_task = Task(
     description=f"""Identiy best ideas for teaching and engaging student in {topic}.
   Focus on identifying the easiest manner of teaching.
-  Your final report should clearly articulate the various key points, best 
-  practices.
   """,
-    expected_output=f'A comprehensive 2 paragraphs long report on {topic}.',
     tools=[search_tool],
     agent=researcher
 )
@@ -75,7 +74,7 @@ write_task = Task(
     description=f"""Compose an insightful article on {topic}.
     This article should be easy to understand, engaging and positive.
   """,
-    expected_output=f'A 3 paragraph article on {topic}.',
+    expected_output=f'A 4 paragraph article on {topic}.',
     tools=[search_tool],
     agent=writer
 )
@@ -84,7 +83,7 @@ write_task = Task(
 examiner_task = Task(
     description=f"""Compose standard multi-choice questions on {topic}.
   """,
-    expected_output=f'3 questions and answers on {topic}.',
+    expected_output=f'3 Multi-choice questions and answers on {topic}.',
     tools=[search_tool],
     agent=examiner
 )
@@ -98,7 +97,16 @@ crew = Crew(
   process=Process.sequential  # Sequential task execution
 )
 
-# Starting the task execution process
-result = crew.kickoff()
-print(result)
+# # Starting the task execution process
+with st.spinner(text="In progress"):
+    result = crew.kickoff()
+    st.success('Model has finished Task')
 
+
+# Returns a TaskOutput object with the description and results of the task
+st.title('Article')
+st.markdown(f"""{write_task.output.result}
+""")
+st.title('Questions')
+st.markdown(f"""{examiner_task.output.result}
+""")
