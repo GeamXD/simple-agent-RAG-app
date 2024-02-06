@@ -77,7 +77,7 @@ research_task = Task(
 
 # Writing task based on research findings
 write_task = Task(
-    description=f"""Compose an insightful article on {topic}.
+    description=f"""Compose an explanatory article on {topic}.
     This article should be easy to understand, engaging and positive.
   """,
     expected_output=f'A 4 paragraph article on {topic}.',
