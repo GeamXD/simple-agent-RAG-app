@@ -1,20 +1,20 @@
 from crewai import Agent, Task, Process, Crew
 from langchain_community.tools import DuckDuckGoSearchRun
-from langchain.llms import Ollama
-import streamlit as st
+from langchain_community.llms import Ollama
+# import streamlit as st
 
 ##### TITLE ############################
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.write('')
-with col2:
-    st.title('Crew App')
-with col3:
-    st.write('')
+# col1, col2, col3 = st.columns(3)
+# with col1:
+#     st.write('')
+# with col2:
+#     st.title('Crew App')
+# with col3:
+#     st.write('')
 
 # Topic that will be used in the crew run
-topic = st.text_input('', placeholder='Enter interested topic')
-
+# topic = st.text_input('', placeholder='Enter interested topic')
+topic = 'Gravity'
 # TOOL for searching
 search_tool = DuckDuckGoSearchRun()
 
@@ -31,23 +31,18 @@ researcher = Agent(
     complex ideas simple and teachable""",
     verbose=True,
     allow_delegation=False,
-    tools=[search_tool],
     llm=ollama_openhermes,
-    max_iter=10,
-    max_rpm=10,
 )
 
 writer = Agent(
     role='Senior Education Writer',
-    goal=f'craft compelling articles for new learners using researcher ideas in {topic}',
+    goal=f'craft compelling articles for new learners in {topic}',
     backstory="""You are a renowned writer in the education system, known for your
     insightul and engaging articles. With a deep understanding of the
     education system. You can transfrom complex ideas into compelling articles""",
     verbose=True,
     allow_delegation=True,
     llm=ollama_openhermes,
-    max_iter=10,
-    max_rpm=10,
 )
 
 examiner = Agent(
@@ -59,8 +54,6 @@ examiner = Agent(
     verbose=True,
     allow_delegation=False,
     llm=ollama_openhermes,
-    max_iter=10,
-    max_rpm=10,
 )
 
 ################ TASKS ###############################
@@ -73,7 +66,6 @@ research_task = Task(
   practices.
   """,
     expected_output=f'A comprehensive 2 paragraphs long report on {topic}.',
-    max_inter=3,
     tools=[search_tool],
     agent=researcher
 )
@@ -81,8 +73,7 @@ research_task = Task(
 # Writing task based on research findings
 write_task = Task(
     description=f"""Compose an insightful article on {topic}.
-  Focus on the best practices.This article should be easy to 
-  understand, engaging and positive.
+    This article should be easy to understand, engaging and positive.
   """,
     expected_output=f'A 3 paragraph article on {topic}.',
     tools=[search_tool],
