@@ -1,4 +1,3 @@
-%%writefile app.py
 from crewai import Agent, Task, Process, Crew
 from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_community.llms import Ollama
