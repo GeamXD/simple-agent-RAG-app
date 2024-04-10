@@ -1,4 +1,4 @@
-# agent-workflow-test-case-project
+# Simple RAG App
 
 ## Getting Started
 
